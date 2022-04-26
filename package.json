@@ -1,15 +1,22 @@
 {
   "name": "wsmern2",
   "version": "1.0.0",
-  "description": "",
+  "description": "add file in the folder backend  : .env with variables : port=YOUR PORT \r Mongo_Url =\"YOUR MONGO DB URL\"\r SECRET=\"YOUR SECRET WORDS\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"cd backend && npm start\" \"cd client && npm start\""
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zahraboukthir/wsmern2F3.git"
+  },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "bugs": {
+    "url": "https://github.com/zahraboukthir/wsmern2F3/issues"
+  },
+  "homepage": "https://github.com/zahraboukthir/wsmern2F3#readme",
+  "dependencies": {
     "concurrently": "^7.1.0"
   }
 }

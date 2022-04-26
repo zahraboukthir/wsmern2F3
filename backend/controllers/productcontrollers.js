@@ -7,7 +7,7 @@ const addproduct = async (req, res) => {
   console.log(req.file);
   const { file } = req;
   try {
-    const newProduct = new Product(req.body);
+    const newProduct = new Product({ ...req.body, user: req.user._id });
     newProduct.image = `${url}/${file.path}`;
     await newProduct.save();
     res.send({ product: newProduct, message: "product succesffuly" });
