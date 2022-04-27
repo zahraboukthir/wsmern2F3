@@ -1,38 +1,73 @@
+import "./App.css";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./Component/Home";
 
-import './App.css';
-import { Routes, Route } from 'react-router-dom'
-import Home  from './Component/Home';
-
-import NavigationBar from './Component/NavBars/NavigationBar';
-import SignUp from './Component/AuthForms/SignUp';
-import SignIn from './Component/AuthForms/SignIn';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getUser } from './redux/actions/useractions';
-import PrivateRoute from './Component/PrivateRoute/index';
-import DashboardClient from './Component/PrivateRoute/Dashbords/DashboardClient';
-import DashbooardAdmin from './Component/PrivateRoute/Dashbords/DashbooardAdmin';
-
+import NavigationBar from "./Component/NavBars/NavigationBar";
+import SignUp from "./Component/AuthForms/SignUp";
+import SignIn from "./Component/AuthForms/SignIn";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getUser } from "./redux/actions/useractions";
+import PrivateRoute from "./Component/PrivateRoute/index";
+import DashboardClient from "./Component/PrivateRoute/Dashbords/DashboardClient";
+import DashbooardAdmin from "./Component/PrivateRoute/Dashbords/DashbooardAdmin";
+import AddProduct from "./Component/Product/AddProduct";
+import ProductList from "./Component/Product/ProductList";
+import { getAllProducts } from "./redux/actions/productactions";
 
 function App() {
-  const dispatch=useDispatch()
- 
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
- 
-    dispatch( getUser())
-  }, [dispatch])
+    dispatch(getUser());
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   return (
     <div className="App">
-      <NavigationBar/>
-     <Routes>
-       <Route exact path='/' element={<Home/>} />
-       <Route  path='/register' element={<SignUp/>} />
-       <Route path='/login' element={<SignIn/>} />
-       <Route path="/dachboardClient" element={<PrivateRoute><DashboardClient/></PrivateRoute>}/>
-       <Route path="/dachboardAdmin" element={<PrivateRoute><DashbooardAdmin/></PrivateRoute>}/>
-     </Routes>
+      <NavigationBar />
+      <Routes>
+        <Route path="/register" element={<SignUp />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route
+          path="/"
+          element={
+            <div>
+              <Home />
+              <Link to="/addProduct">
+                {localStorage.getItem("token") ? (
+                  <button>ADD PRODUCT</button>
+                ) : null}
+              </Link>{" "}
+              <ProductList />{" "}
+            </div>
+          }
+        />
+        <Route
+          path="/addProduct"
+          element={
+            <PrivateRoute>
+              <AddProduct />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dachboardClient"
+          element={
+            <PrivateRoute>
+              <DashboardClient />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dachboardAdmin"
+          element={
+            <PrivateRoute>
+              <DashbooardAdmin />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
     </div>
   );
 }

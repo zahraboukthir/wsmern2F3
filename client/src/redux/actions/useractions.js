@@ -38,15 +38,18 @@ export const registre = (newuser, navigate) => async (dispatch) => {
     }
   }
 };
-export const loginUser = (user,navigate) => async (dispatch) => {
+export const loginUser = (user, navigate) => async (dispatch) => {
   dispatch({ type: User_load });
   try {
     const response = await axios.post("http://localhost:7000/user/login", user);
     dispatch({ type: LOGIN_SUCCESS, payload: response.data });
     // navigate("/");
-    console.log(response.data.user.role)
-   navigate(response.data.user.role==="admin"?"/dachboardAdmin" :"/dachboardClient")
- 
+    console.log(response.data.user.role);
+    navigate(
+      response.data.user.role === "admin"
+        ? "/dachboardAdmin"
+        : "/dachboardClient"
+    );
   } catch (error) {
     console.dir(error);
 
@@ -69,7 +72,6 @@ export const getUser = () => async (dispatch) => {
     dispatch({ type: USER_FAIL, payload: error });
   }
 };
-
 
 export const logout = () => (dispatch) => {
   //remove the token from the localstorage

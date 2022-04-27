@@ -1,5 +1,5 @@
 const express = require("express");
-const { addproduct } = require("../controllers/productcontrollers");
+const { addproduct, allproduct } = require("../controllers/productcontrollers");
 const isAdmin = require("../middlewares/isAdmin");
 const isAuthpassport = require("../middlewares/isAuthpassport");
 const router = express.Router();
@@ -17,4 +17,11 @@ router.post(
   upload("products").single("file"),
   addproduct
 );
+/**
+ * @param get /product
+ * @description all product
+ * @access PUblic
+ */
+router.get("/",allproduct)
+
 module.exports = router;

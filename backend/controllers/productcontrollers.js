@@ -15,4 +15,12 @@ const addproduct = async (req, res) => {
     res.status(400).send(err.message);
   }
 };
-module.exports = { addproduct };
+const allproduct=async (req, res) => {
+  try {
+    const allProducts = await Product.find({}).populate("user","fullName");
+    res.send({ allProducts });
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+module.exports = { addproduct,allproduct };
