@@ -1,5 +1,11 @@
 const express = require("express");
-const { addproduct, allproduct,OneProduct,updateProduct,deleteProduct } = require("../controllers/productcontrollers");
+const {
+  addproduct,
+  allproduct,
+  OneProduct,
+  updateProduct,
+  deleteProduct,
+} = require("../controllers/productcontrollers");
 const isAdmin = require("../middlewares/isAdmin");
 const isAuthpassport = require("../middlewares/isAuthpassport");
 const router = express.Router();
@@ -22,7 +28,7 @@ router.post(
  * @description all product
  * @access PUblic
  */
-router.get("/",allproduct)
+router.get("/", allproduct);
 
 /**
  * @param get /product/one/:id
@@ -37,12 +43,18 @@ router.get("/one/:id", OneProduct);
  * @access PRIvate for admin
  */
 
-router.put("/update/:id",isAuthpassport(),isAdmin,updateProduct);
+router.put(
+  "/update/:id",
+  isAuthpassport(),
+  isAdmin,
+  upload("products").single("file"),
+  updateProduct
+);
 /**
  * @param delete /product/delete/:id
  * @description Delete Product
  * @access PRIvate for admin
  */
-// 
-router.delete("/delete/:id",isAuthpassport(),isAdmin, deleteProduct);
+//
+router.delete("/delete/:id", isAuthpassport(), isAdmin, deleteProduct);
 module.exports = router;

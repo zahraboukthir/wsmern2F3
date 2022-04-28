@@ -36,10 +36,13 @@ const OneProduct= async (req, res) => {
 }
 //update product
 const updateProduct=async (req, res) => {
+  const url = `${req.protocol}://${req.get("host")}`;
+  console.log(req.file);
+  const { file } = req;
   try {
     let updateProduct = await Product.updateOne(
       { _id: req.params.id },
-      { $set: { ...req.body } }
+      { $set: { ...req.body,image:`${url}/${file.path}` } }
     );
     
     if (updateProduct.modifiedCount == 1) {

@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/useractions";
 
-const pages = ["Home", "Products"];
+const pages = ["Home", "Products","Users"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const settingsGuest = ["Login", "Register"];
 
@@ -89,6 +89,14 @@ const NavigationBar = () => {
               }}
             >
               {pages.map((page) =>
+                currentUser &&  currentUser.role === "admin" &&  page === "Users"   ? 
+                 (
+                   <Link to="/UserList">
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                       <Typography textAlign="center">{page}</Typography>
+                     </MenuItem>
+                   </Link>
+                 ):
                 page === "Home" ? (
                   <Link to="/">
                     {" "}
@@ -96,7 +104,9 @@ const NavigationBar = () => {
                       <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
                   </Link>
-                ) : (
+                ) 
+               
+                : (
                   <Link to="/productList">
                     {" "}
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
@@ -128,7 +138,14 @@ const NavigationBar = () => {
                     {" "}
                     {page}
                   </Link>
-                ) : (
+                ) : page === "Users" && currentUser && currentUser.role==="admin"  ? 
+                (
+                  <Link to="/UserList">
+                    {page}
+                  </Link>
+                )
+                :
+                 (
                   <Link to="/productList">
                     {page}
                   </Link>

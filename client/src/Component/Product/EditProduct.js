@@ -31,11 +31,13 @@ const EditProduct = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
+    data.append('file',product.image);
+    data.append('name',product.name);
+    data.append('price',product.price);
+    data.append('qte',product.qte);
     console.log({
-      name: data.get("name"),
-      price: data.get("price"),
-      qte: data.get("qte"),
-    //   image: data.get("file"),
+
+      image: data.get("file"),
     });
     dispatch(editProduct(product, id, navigate));
   };
@@ -102,7 +104,7 @@ const EditProduct = () => {
                   setProduct({ ...product, qte: e.target.value })
                 }
               />
-              {/* <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -113,7 +115,7 @@ const EditProduct = () => {
                 onChange={(e) =>
                   setProduct({ ...product, image: e.target.files[0] })
                 }
-              /> */}
+              />
               <Button
                 type="submit"
                 fullWidth
