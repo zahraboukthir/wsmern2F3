@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors=require('cors')
 require("dotenv").config();
+// the millware static for the uploads of photos in thier folders
 app.use("/uploads", express.static(__dirname + "/uploads"));
 /**
  * connection BD
