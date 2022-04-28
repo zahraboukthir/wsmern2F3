@@ -15,10 +15,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/useractions";
 
-
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Home", "Products"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const settingsGuest = ["Login","Register"];
+const settingsGuest = ["Login", "Register"];
 
 const NavigationBar = () => {
   const dispatch = useDispatch();
@@ -43,7 +42,7 @@ const NavigationBar = () => {
   };
   const handleCloseUserMenuLog = () => {
     dispatch(logout());
-    
+
     setAnchorElUser(null);
   };
 
@@ -57,7 +56,7 @@ const NavigationBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            {currentUser && currentUser.fullName}
+            <Link to="/"> {currentUser && currentUser.fullName}</Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -89,11 +88,23 @@ const NavigationBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              {pages.map((page) =>
+                page === "Home" ? (
+                  <Link to="/">
+                    {" "}
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  </Link>
+                ) : (
+                  <Link to="/productList">
+                    {" "}
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  </Link>
+                )
+              )}
             </Menu>
           </Box>
           <Typography
@@ -102,7 +113,8 @@ const NavigationBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            {currentUser && currentUser.fullName}
+            {" "}
+            <Link to="/"> {currentUser && currentUser.fullName}</Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -111,7 +123,16 @@ const NavigationBar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+               { page === "Home" ? (
+                  <Link to="/">
+                    {" "}
+                    {page}
+                  </Link>
+                ) : (
+                  <Link to="/productList">
+                    {page}
+                  </Link>
+                )}
               </Button>
             ))}
           </Box>
@@ -141,37 +162,48 @@ const NavigationBar = () => {
               onClose={handleCloseUserMenu}
             >
               {token
-                ? settings.map((el) =>(
+                ? settings.map((el) =>
                     el === "Logout" ? (
-                      <MenuItem key={el} onClick={handleCloseUserMenuLog}>
-                        <Typography textAlign="center"> <Link to="/login">{el}</Link></Typography>
-                      </MenuItem>
-                    ):
-                    el === "Dashboard" ? (
-                      <MenuItem key={el} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center"> <Link to={currentUser.role==="admin"?'/dachboardAdmin':'/dachboardClient'}>{el}</Link></Typography>
-                      </MenuItem>
-                    ) 
-                    : (
+                      <Link to="/login">
+                        {" "}
+                        <MenuItem key={el} onClick={handleCloseUserMenuLog}>
+                          <Typography textAlign="center">{el}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ) : el === "Dashboard" ? (
+                      <Link
+                        to={
+                          currentUser.role === "admin"
+                            ? "/dachboardAdmin"
+                            : "/dachboardClient"
+                        }
+                      >
+                        <MenuItem key={el} onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">{el}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ) : (
                       <MenuItem key={el} onClick={handleCloseUserMenu}>
                         <Typography textAlign="center">{el}</Typography>
                       </MenuItem>
-                    ))
+                    )
                   )
-                  
-                : settingsGuest.map((el)=>
-                  el === "Login" ? (
-                    <MenuItem key={el} onClick={handleCloseUserMenuLog}>
-                      <Typography textAlign="center"> <Link to="/login">{el}</Link></Typography>
-                     
-                    </MenuItem>
-                  ) : (
-                    <MenuItem key={el} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center"> <Link to="/register">{el}</Link></Typography>
-                    </MenuItem>
-                  )
-                )
-                }
+                : settingsGuest.map((el) =>
+                    el === "Login" ? (
+                      <Link to="/login">
+                        <MenuItem key={el} onClick={handleCloseUserMenuLog}>
+                          <Typography textAlign="center"> {el}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ) : (
+                      <Link to="/register">
+                        {" "}
+                        <MenuItem key={el} onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center"> {el}</Typography>
+                        </MenuItem>
+                      </Link>
+                    )
+                  )}
             </Menu>
           </Box>
         </Toolbar>

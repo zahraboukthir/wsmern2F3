@@ -27,7 +27,7 @@ export default function Product({ el }) {
           {el.createDate} by {el.user.fullName}
         </Typography>
       </CardContent>
-     {user&&user.role=="admin"?<CardActions>
+     {user&&user.role==="admin"?<CardActions>
        <Link to ={`/edit/${el._id}`} ><Button size="small" >Edit</Button></Link> 
       </CardActions>:null}
     </Card>

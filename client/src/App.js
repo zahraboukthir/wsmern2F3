@@ -32,8 +32,16 @@ function App() {
         <Route
           path="/"
           element={
-            <div>
+            
               <Home />
+              
+          }
+        /> 
+        <Route
+          path="/productList"
+          element={
+            <div>
+              
               <Link to="/addProduct">
                 {localStorage.getItem("token") ? (
                   <button>ADD PRODUCT</button>
