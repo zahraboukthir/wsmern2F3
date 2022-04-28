@@ -5,10 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
+import { deleteProduct } from "../../redux/actions/productactions";
 
 export default function Product({ el }) {
+  const dispatch=useDispatch()
   const user=useSelector(state=>state.userReducer.currentUser)
   return (
     <div style={{margin:"10px"}}>
@@ -29,6 +32,7 @@ export default function Product({ el }) {
       </CardContent>
      {user&&user.role==="admin"?<CardActions>
        <Link to ={`/edit/${el._id}`} ><Button size="small" >Edit</Button></Link> 
+        <Button size="small" onClick={()=>dispatch(deleteProduct(el._id))}>Delete</Button>
       </CardActions>:null}
     </Card>
     </div>

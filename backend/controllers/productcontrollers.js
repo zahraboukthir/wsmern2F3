@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-
+//add product
 const addproduct = async (req, res) => {
   // protocole :http
   // host : localhost
@@ -15,6 +15,7 @@ const addproduct = async (req, res) => {
     res.status(400).send(err.message);
   }
 };
+//get all products
 const allproduct=async (req, res) => {
   try {
     const allProducts = await Product.find({}).populate("user","fullName");
@@ -23,4 +24,43 @@ const allproduct=async (req, res) => {
     res.status(400).send(err.message);
   }
 }
-module.exports = { addproduct,allproduct };
+//get product by Id
+const OneProduct= async (req, res) => {
+  try {
+    const oneProduct = await Product.findById(req.params.id);
+    res.send({ oneProduct });
+    //console.log(req.params.id);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+//update product
+const updateProduct=async (req, res) => {
+  try {
+    let updateProduct = await Product.updateOne(
+      { _id: req.params.id },
+      { $set: { ...req.body } }
+    );
+    
+    if (updateProduct.modifiedCount == 1) {
+      return res.send({ msg: "product secessufly update" });
+    }
+    res.status(400).send({ msg: " no thing to update" });
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+// Delete Product
+const deleteProduct= async (req, res) => {
+  try {
+    const deleteProduct = await Product.deleteOne({ _id: req.params.id });
+    console.log(deleteProduct);
+    if (deleteProduct.deletedCount == 1) {
+      return res.send({ msg: "product secessufly deleted" });
+    }
+    res.status(400).send({msg:"product already deleted"})
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+}
+module.exports = { addproduct,allproduct,OneProduct,updateProduct,deleteProduct };

@@ -14,6 +14,7 @@ import DashbooardAdmin from "./Component/PrivateRoute/Dashbords/DashbooardAdmin"
 import AddProduct from "./Component/Product/AddProduct";
 import ProductList from "./Component/Product/ProductList";
 import { getAllProducts } from "./redux/actions/productactions";
+import EditProduct from "./Component/Product/EditProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,19 +30,11 @@ function App() {
       <Routes>
         <Route path="/register" element={<SignUp />} />
         <Route path="/login" element={<SignIn />} />
-        <Route
-          path="/"
-          element={
-            
-              <Home />
-              
-          }
-        /> 
+        <Route path="/" element={<Home />} />
         <Route
           path="/productList"
           element={
             <div>
-              
               <Link to="/addProduct">
                 {localStorage.getItem("token") ? (
                   <button>ADD PRODUCT</button>
@@ -59,6 +52,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/edit/:id" element={<EditProduct />} />
         <Route
           path="/dachboardClient"
           element={
