@@ -35,12 +35,13 @@ function App() {
           path="/productList"
           element={
             <div>
+              
+              <ProductList />{" "}
               <Link to="/addProduct">
                 {localStorage.getItem("token") ? (
                   <button>ADD PRODUCT</button>
                 ) : null}
               </Link>{" "}
-              <ProductList />{" "}
             </div>
           }
         />
