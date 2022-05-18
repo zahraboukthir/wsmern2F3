@@ -45,8 +45,7 @@ router.get("/one/:id", OneProduct);
 
 router.put(
   "/update/:id",
-  isAuthpassport(),
-  isAdmin,
+  
   upload("products").single("file"),
   updateProduct
 );

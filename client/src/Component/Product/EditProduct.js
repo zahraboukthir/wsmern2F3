@@ -29,7 +29,7 @@ const EditProduct = () => {
   const theme = createTheme();
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const data = new FormData();
     // eslint-disable-next-line no-console
     data.append('file',product.image);
     data.append('name',product.name);
@@ -37,9 +37,9 @@ const EditProduct = () => {
     data.append('qte',product.qte);
     console.log({
 
-      image: data.get("file"),
+      data
     });
-    dispatch(editProduct(product, id, navigate));
+    dispatch(editProduct(data, id, navigate));
   };
   return (
     <div>

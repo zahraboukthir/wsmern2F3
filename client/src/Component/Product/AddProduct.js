@@ -29,6 +29,10 @@ const [qte, setQte] = React.useState(0)
     data.append('name',name);
     data.append('price',price);
     data.append('qte',qte);
+    console.log({
+
+      image: data.get("file"),
+    });
     dispatch(
       addProduct(data,navigate)
       

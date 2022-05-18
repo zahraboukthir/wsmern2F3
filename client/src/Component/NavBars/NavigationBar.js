@@ -15,7 +15,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/useractions";
 
-const pages = ["Home", "Products","Users"];
+const pages = ["Home", "Products", "Users"];
+const pagesclient = ["Home", "Products", "Profile"];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const settingsGuest = ["Login", "Register"];
 
@@ -88,33 +90,47 @@ const NavigationBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) =>
-                currentUser &&  currentUser.role === "admin" &&  page === "Users"   ? 
-                 (
-                   <Link to="/UserList">
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                       <Typography textAlign="center">{page}</Typography>
-                     </MenuItem>
-                   </Link>
-                 ):
-                page === "Home" ? (
-                  <Link to="/">
-                    {" "}
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  </Link>
-                ) 
-               
-                : (
-                  <Link to="/productList">
-                    {" "}
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  </Link>
-                )
-              )}
+              {currentUser && currentUser.role === "admin"
+                ? pages.map((page) =>
+                    page === "Users" ? (
+                      <Link to="/UserList">
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                          <Typography textAlign="center">{page}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ) : page === "Home" ? (
+                      <Link to="/">
+                        {" "}
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                          <Typography textAlign="center">{page}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ) : (
+                      <Link to="/productList">
+                        {" "}
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                          <Typography textAlign="center">{page}</Typography>
+                        </MenuItem>
+                      </Link>
+                    )
+                  )
+                : pagesclient.map((page) =>
+                    page === "Home" ? (
+                      <Link to="/">
+                        {" "}
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                          <Typography textAlign="center">{page}</Typography>
+                        </MenuItem>
+                      </Link>
+                    ) : (
+                      <Link to="/productList">
+                        {" "}
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                          <Typography textAlign="center">{page}</Typography>
+                        </MenuItem>
+                      </Link>
+                    )
+                  )}
             </Menu>
           </Box>
           <Typography
@@ -127,31 +143,35 @@ const NavigationBar = () => {
             <Link to="/"> {currentUser && currentUser.fullName}</Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-               { page === "Home" ? (
-                  <Link to="/">
-                    {" "}
-                    {page}
-                  </Link>
-                ) : page === "Users" && currentUser && currentUser.role==="admin"  ? 
-                (
-                  <Link to="/UserList">
-                    {page}
-                  </Link>
-                )
-                :
-                 (
-                  <Link to="/productList">
-                    {page}
-                  </Link>
-                )}
-              </Button>
-            ))}
+            {currentUser && currentUser.role === "admin"
+              ? pages.map((page) => (
+                  <Button
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page === "Home" ? (
+                      <Link to="/"> {page}</Link>
+                    ) : page === "Users" ? (
+                      <Link to="/UserList">{page}</Link>
+                    ) : (
+                      <Link to="/productList">{page}</Link>
+                    )}
+                  </Button>
+                ))
+              : pagesclient.map((page) => (
+                  <Button
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page === "Home" ? (
+                      <Link to="/"> {page}</Link>
+                    ) : (
+                      <Link to="/productList">{page}</Link>
+                    )}
+                  </Button>
+                ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

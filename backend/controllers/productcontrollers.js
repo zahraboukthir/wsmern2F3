@@ -37,7 +37,7 @@ const OneProduct= async (req, res) => {
 //update product
 const updateProduct=async (req, res) => {
   const url = `${req.protocol}://${req.get("host")}`;
-  console.log(req.file);
+  console.log("file" ,req.file);
   const { file } = req;
   try {
     let updateProduct = await Product.updateOne(
