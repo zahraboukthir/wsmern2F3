@@ -32,6 +32,9 @@ export default function Product({ el }) {
       </CardContent>
      {user&&user.role==="admin"?<CardActions>
        <Link to ={`/edit/${el._id}`} ><Button size="small" >Edit</Button></Link> 
+       <Link to="/addProduct">
+       <Button size="small" >Add Product</Button>
+              </Link>{" "}
         <Button size="small" onClick={()=>dispatch(deleteProduct(el._id))}>Delete</Button>
       </CardActions>:null}
     </Card>
